@@ -1,4 +1,4 @@
-const CACHE = "gastos-cache-v6";
+const CACHE = "gastos-cache-v9";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
