@@ -17,21 +17,17 @@
       --txt:#f2f2f2;
       --muted:rgba(242,242,242,.72);
       --brand:#2d6cdf;
-      --ok:#2ecc71;
-      --warn:#f1c40f;
       --danger:#ff4d4f;
       --radius:16px;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
       background:var(--bg);
       color:var(--txt);
-      padding-bottom:84px; /* espaço para barra inferior */
+      padding-bottom:84px;
     }
-
     header{
       padding:16px 16px 10px;
       position:sticky;
@@ -41,12 +37,10 @@
       border-bottom:1px solid rgba(255,255,255,.06);
       backdrop-filter:saturate(140%) blur(8px);
     }
-
     .wrap{max-width:980px;margin:0 auto;padding:14px 16px}
     .title{display:flex;align-items:center;justify-content:space-between;gap:10px}
     h1{margin:0;font-size:18px;letter-spacing:.2px}
     .muted{opacity:.75;font-size:12px;line-height:1.25}
-
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -54,9 +48,8 @@
       padding:14px;
       margin:12px 0;
     }
-
     label{display:block;font-size:12px;opacity:.85;margin:10px 0 6px}
-    input,select{
+    input,select,textarea{
       width:100%;
       padding:12px;
       border-radius:14px;
@@ -69,9 +62,7 @@
 
     .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-    @media (max-width:680px){
-      .row3{grid-template-columns:1fr}
-    }
+    @media (max-width:680px){ .row3{grid-template-columns:1fr} }
 
     .btn{
       width:100%;
@@ -106,7 +97,6 @@
     .kpi .t{font-size:12px;opacity:.75}
     .kpi .v{font-size:18px;font-weight:900;margin-top:6px}
 
-    /* Lista estilo app financeiro */
     .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
     .item{
       background:var(--card2);
@@ -114,13 +104,8 @@
       border-radius:18px;
       padding:12px;
     }
-    .itemTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .desc{font-weight:800;line-height:1.15}
+    .itemTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .desc{font-weight:900;line-height:1.15}
     .sub{margin-top:4px;font-size:12px;color:var(--muted)}
     .money{font-weight:950;font-size:18px;white-space:nowrap}
     .moneyWrap{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
@@ -139,19 +124,14 @@
     .badge.fixed{border-color:rgba(45,108,223,.35); color:#d9e6ff}
     .badge.manual{border-color:rgba(255,255,255,.20); color:var(--txt)}
 
-    .actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .chip{
       padding:9px 10px;
       border-radius:12px;
       border:1px solid var(--line2);
       background:transparent;
       color:var(--txt);
-      font-weight:700;
+      font-weight:800;
       font-size:13px;
     }
     .chip.primary{border-color:rgba(45,108,223,.45); color:#d9e6ff}
@@ -160,7 +140,13 @@
     .chip.danger{border-color:rgba(255,77,79,.45); color:var(--danger)}
     .chip:active{transform:scale(.99)}
 
-    .details{
+    .inlineRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .inlineRow input, .inlineRow select{padding:10px;border-radius:12px}
+    .inlineRow .miniLbl{font-size:11px;opacity:.7;margin:6px 0 6px}
+
+    details{margin-top:10px}
+    summary{cursor:pointer;opacity:.88;font-weight:900;padding:6px 0}
+    .detailsGrid{
       margin-top:10px;
       padding-top:10px;
       border-top:1px dashed rgba(255,255,255,.12);
@@ -169,20 +155,11 @@
       gap:10px;
     }
     .field .lbl{font-size:11px;opacity:.7;margin-bottom:4px}
-    .field .val{font-size:13px;font-weight:800}
-    @media (max-width:520px){
-      .details{grid-template-columns:1fr}
-    }
+    .field .val{font-size:13px;font-weight:900}
+    @media (max-width:520px){ .detailsGrid{grid-template-columns:1fr} }
 
-    /* inputs compactos dentro do item */
-    .inlineRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-    .inlineRow input, .inlineRow select{padding:10px;border-radius:12px}
-    .inlineRow .miniLbl{font-size:11px;opacity:.7;margin:6px 0 6px}
-
-    /* Bottom nav */
     .nav{
-      position:fixed;
-      left:0; right:0; bottom:0;
+      position:fixed;left:0;right:0;bottom:0;
       padding:10px 14px calc(10px + env(safe-area-inset-bottom));
       background:rgba(11,11,11,.92);
       border-top:1px solid rgba(255,255,255,.08);
@@ -196,17 +173,41 @@
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.03);
       color:var(--txt);
-      font-weight:900;
+      font-weight:950;
       letter-spacing:.2px;
     }
     .navBtn.active{background:rgba(45,108,223,.18); border-color:rgba(45,108,223,.38)}
     .hidden{display:none}
 
     canvas{background:var(--card2);border:1px solid var(--line2);border-radius:16px}
+    .hr{height:1px;background:rgba(255,255,255,.06);margin:12px 0}
+
+    /* Fixos editor */
+    .fixoRow{
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr .6fr auto;
+      gap:10px;
+      align-items:end;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(255,255,255,.10);
+    }
+    .fixoRow:first-child{border-top:none;padding-top:0}
+    @media (max-width:760px){
+      .fixoRow{grid-template-columns:1fr; align-items:stretch}
+    }
+    .miniBtn{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,77,79,.45);
+      background:transparent;
+      color:var(--danger);
+      font-weight:900;
+    }
   </style>
 </head>
-<body>
 
+<body>
 <header>
   <div class="wrap">
     <div class="title">
@@ -240,8 +241,34 @@
           <button class="btn secondary" id="btnGarantirFixos">Gerar fixos do mês</button>
         </div>
       </div>
+
+      <!-- Busca + Ordenação -->
+      <div class="row" style="margin-top:10px">
+        <div>
+          <label>Busca</label>
+          <input id="busca" placeholder="Ex: aluguel, nubank, casa, boleto...">
+        </div>
+        <div>
+          <label>Ordenação</label>
+          <select id="ordenacao">
+            <option value="PENDENTE_DATA">Pendentes primeiro (data)</option>
+            <option value="PENDENTE_VENC">Pendentes primeiro (vencimento)</option>
+            <option value="VENC_ASC">Vencimento (mais próximo)</option>
+            <option value="VALOR_DESC">Maior valor</option>
+            <option value="VALOR_ASC">Menor valor</option>
+            <option value="DATA_ASC">Data</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Alertas de vencimento -->
+      <div id="alertas" class="card" style="display:none; margin-top:12px; padding:12px; border-color:rgba(241,196,15,.35);">
+        <div style="font-weight:900; margin-bottom:6px">⚠️ Atenção</div>
+        <div id="alertasText" class="muted"></div>
+      </div>
+
       <div class="muted" style="margin-top:10px">
-        Dica: nos itens, edite <b>valor</b> e <b>status</b> diretamente, como um app financeiro.
+        Edite <b>valor</b> e <b>status</b> como num app financeiro (sem tabela lateral).
       </div>
     </div>
 
@@ -259,20 +286,29 @@
         <button class="btn secondary" id="btnExportCSV">Exportar CSV</button>
         <button class="btn secondary" id="btnBackup">Backup JSON</button>
       </div>
+
+      <button class="btn secondary" id="btnImport" style="margin-top:10px">Importar Backup JSON</button>
+
+      <div class="hr"></div>
+
       <button class="btn danger" id="btnClear">Limpar mês</button>
 
       <div class="list" id="list"></div>
 
       <div class="muted" style="margin-top:10px">
-        Anexos grandes (PDF) podem ocupar muito espaço no iPhone. Prefira arquivos menores.
+        Anexos grandes (PDF) ocupam espaço. Se tiver muito anexo, use “importar sem anexo”.
       </div>
     </div>
 
   </section>
 
-  <!-- VIEW: ADICIONAR -->
+  <!-- VIEW: ADICIONAR + EDITAR FIXOS -->
   <section id="viewAdd" class="hidden">
+
+    <!-- Adicionar manual -->
     <div class="card">
+      <div class="muted" style="font-weight:900; opacity:.9">Adicionar gasto manual</div>
+
       <div class="row">
         <div>
           <label>Mês</label>
@@ -331,11 +367,25 @@
       <input id="anexo" type="file" accept="application/pdf,image/*" />
 
       <button class="btn" id="btnAdd">Adicionar gasto</button>
-
-      <div class="muted" style="margin-top:10px">
-        Use essa aba para gastos “fora dos fixos”.
-      </div>
+      <div class="muted" style="margin-top:10px">Use aqui para gastos fora dos fixos.</div>
     </div>
+
+    <!-- Editor de fixos -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div class="muted" style="font-weight:900; opacity:.9">Custos fixos (editar)</div>
+        <button class="btn secondary" id="btnResetFixos" style="width:auto">Resetar padrão</button>
+      </div>
+      <div class="muted" style="margin-top:8px">
+        Aqui você define quais fixos aparecem todo mês. Depois, na aba “Mês”, é só preencher valor e marcar pago/pendente.
+      </div>
+
+      <div id="fixosList"></div>
+
+      <button class="btn secondary" id="btnAddFixo" style="margin-top:12px">+ Adicionar novo fixo</button>
+      <button class="btn" id="btnSalvarFixos" style="margin-top:10px">Salvar fixos</button>
+    </div>
+
   </section>
 
   <!-- VIEW: GRÁFICOS -->
@@ -366,7 +416,6 @@
 
 </div>
 
-<!-- Bottom nav -->
 <nav class="nav">
   <div class="navWrap">
     <button class="navBtn active" id="navMes">Mês</button>
@@ -413,7 +462,7 @@ async function dbGetAll(){
     const tx = db.transaction(STORE, "readonly");
     const req = tx.objectStore(STORE).getAll();
     req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => reject(req.error);
+    req.onerror = () => reject(tx.error || req.error);
   });
 }
 
@@ -441,26 +490,71 @@ async function dbClearMonth(mes){
 }
 
 /** ======================
- *  FIXOS
+ *  Fixos (configurável)
  *  ====================== */
-const FIXOS = [
-  { nome: "FIES",           categoria: "Educação", pagamento: "Boleto" },
-  { nome: "CONDOMÍNIO",     categoria: "Casa",     pagamento: "Boleto" },
-  { nome: "ALUGUEL",        categoria: "Casa",     pagamento: "Pix" },
-  { nome: "IPTU",           categoria: "Casa",     pagamento: "Boleto" },
-  { nome: "CARTÃO NUBANK",  categoria: "Contas",   pagamento: "Cartão Crédito" },
-  { nome: "INTERNET",       categoria: "Contas",   pagamento: "Boleto" },
-  { nome: "LUZ",            categoria: "Contas",   pagamento: "Boleto" },
-  { nome: "GÁS",            categoria: "Casa",     pagamento: "Boleto" }
+const FIXOS_KEY = "gastos_fixos_v1";
+
+const FIXOS_PADRAO = [
+  { nome: "FIES",           categoria: "Educação", pagamento: "Boleto",         vencimento: 5  },
+  { nome: "CONDOMÍNIO",     categoria: "Casa",     pagamento: "Boleto",         vencimento: 10 },
+  { nome: "ALUGUEL",        categoria: "Casa",     pagamento: "Pix",            vencimento: 5  },
+  { nome: "IPTU",           categoria: "Casa",     pagamento: "Boleto",         vencimento: 5  },
+  { nome: "CARTÃO NUBANK",  categoria: "Contas",   pagamento: "Cartão Crédito", vencimento: 15 },
+  { nome: "INTERNET",       categoria: "Contas",   pagamento: "Boleto",         vencimento: 5  },
+  { nome: "LUZ",            categoria: "Contas",   pagamento: "Boleto",         vencimento: 23 },
+  { nome: "GÁS",            categoria: "Casa",     pagamento: "Boleto",         vencimento: 25 }
 ];
 
+function loadFixos(){
+  try{
+    const raw = localStorage.getItem(FIXOS_KEY);
+    if(!raw) return structuredClone(FIXOS_PADRAO);
+    const arr = JSON.parse(raw);
+    if(!Array.isArray(arr)) return structuredClone(FIXOS_PADRAO);
+    return arr
+      .filter(x => x && typeof x === "object")
+      .map(x => ({
+        nome: String(x.nome || "").toUpperCase().trim(),
+        categoria: String(x.categoria || "Outros"),
+        pagamento: String(x.pagamento || "Boleto"),
+        vencimento: (x.vencimento === null || x.vencimento === undefined || x.vencimento === "")
+          ? null
+          : Math.min(31, Math.max(1, Number(x.vencimento)))
+      }))
+      .filter(x => x.nome.length > 0);
+  }catch{
+    return structuredClone(FIXOS_PADRAO);
+  }
+}
+
+function saveFixos(arr){
+  const clean = arr
+    .filter(x => x && typeof x === "object")
+    .map(x => ({
+      nome: String(x.nome || "").toUpperCase().trim(),
+      categoria: String(x.categoria || "Outros"),
+      pagamento: String(x.pagamento || "Boleto"),
+      vencimento: (x.vencimento === null || x.vencimento === undefined || x.vencimento === "")
+        ? null
+        : Math.min(31, Math.max(1, Number(x.vencimento)))
+    }))
+    .filter(x => x.nome.length > 0);
+  localStorage.setItem(FIXOS_KEY, JSON.stringify(clean));
+}
+
+function resetFixos(){
+  localStorage.setItem(FIXOS_KEY, JSON.stringify(FIXOS_PADRAO));
+}
+
 async function ensureFixedBillsForMonth(mes){
+  const FIXOS = loadFixos();
   const all = await dbGetAll();
+
   for (const f of FIXOS){
     const exists = all.some(x =>
       x.mes === mes &&
       x.tipo === "FIXO" &&
-      String(x.descricao || "").toUpperCase() === f.nome
+      String(x.descricao || "").toUpperCase().trim() === f.nome
     );
 
     if (!exists){
@@ -471,6 +565,7 @@ async function ensureFixedBillsForMonth(mes){
         categoria: f.categoria,
         descricao: f.nome,
         pagamento: f.pagamento,
+        vencimento: f.vencimento ?? null,
         valor: 0,
         status: "PENDENTE",
         tipo: "FIXO",
@@ -482,7 +577,7 @@ async function ensureFixedBillsForMonth(mes){
 }
 
 /** ======================
- *  Utils
+ *  Utils + vencimento/alertas
  *  ====================== */
 const $ = (id)=>document.getElementById(id);
 
@@ -532,6 +627,71 @@ function makePreviewLink(att){
   return a;
 }
 
+function monthDueDateISO(mes, dia){
+  if(!dia) return null;
+  const [y, m] = mes.split("-").map(Number);
+  const d = new Date(y, m - 1, Number(dia));
+  if(d.getMonth() !== (m-1)) return null; // valida 31 em mês curto, etc.
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,"0");
+  const dd = String(d.getDate()).padStart(2,"0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+function daysDiffFromToday(dateISO){
+  const today = new Date();
+  const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+  const [y,m,d] = dateISO.split("-").map(Number);
+  const t1 = new Date(y, m-1, d).getTime();
+  return Math.round((t1 - t0) / (1000*60*60*24));
+}
+function normalizeText(s){
+  return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function showAlertsForMonth(mes, itensMes){
+  const alertBox = $("alertas");
+  const alertText = $("alertasText");
+  if(!alertBox || !alertText) return;
+
+  const pendingWithDue = itensMes
+    .filter(x => (x.status||"PENDENTE")==="PENDENTE")
+    .map(x => {
+      const dueISO = monthDueDateISO(mes, x.vencimento);
+      return { x, dueISO, diff: dueISO ? daysDiffFromToday(dueISO) : null };
+    })
+    .filter(r => r.dueISO);
+
+  const horizonDays = 3; // perto = 3 dias
+  const urgent = pendingWithDue.filter(r => r.diff <= horizonDays);
+
+  if(urgent.length === 0){
+    alertBox.style.display = "none";
+    return;
+  }
+
+  urgent.sort((a,b)=>a.diff-b.diff);
+
+  const lines = urgent.slice(0,6).map(r=>{
+    const tag = (r.diff < 0) ? `ATRASADO (${Math.abs(r.diff)}d)` :
+                (r.diff === 0) ? "VENCE HOJE" :
+                `Vence em ${r.diff}d`;
+    return `• ${r.x.descricao} — ${tag}`;
+  });
+
+  if(urgent.length > 6) lines.push(`… +${urgent.length-6} conta(s)`);
+
+  alertText.textContent = lines.join("\n");
+  alertText.style.whiteSpace = "pre-line";
+  alertBox.style.display = "block";
+
+  // popup 1x/dia (por mês)
+  const key = `alert_shown_${mes}_${todayISO()}`;
+  if(!localStorage.getItem(key)){
+    localStorage.setItem(key, "1");
+    alert("⚠️ Você tem contas pendentes próximas do vencimento. Veja o aviso no topo da tela.");
+  }
+}
+
 /** ======================
  *  Charts (Canvas)
  *  ====================== */
@@ -561,8 +721,7 @@ function drawBarChart(canvasId, labels, values){
     ctx.fillRect(x,y,barW,h);
 
     ctx.fillStyle = "rgba(242,242,242,.75)";
-    const valTxt = Math.round(v).toString();
-    ctx.fillText(valTxt, x, Math.max(14, y-6));
+    ctx.fillText(Math.round(v).toString(), x, Math.max(14, y-6));
 
     ctx.fillStyle = "#f2f2f2";
     const lab = (labels[i] || "").toString();
@@ -581,7 +740,6 @@ async function renderCharts(mes){
 
   const itensMes = all.filter(x => x.mes === mes).filter(filterByStatus);
 
-  // Por categoria (mês)
   const sumCat = {};
   for (const x of itensMes){
     const cat = x.categoria || "Outros";
@@ -590,7 +748,6 @@ async function renderCharts(mes){
   const catEntries = Object.entries(sumCat).sort((a,b)=>b[1]-a[1]);
   drawBarChart("chartCat", catEntries.map(x=>x[0]), catEntries.map(x=>x[1]));
 
-  // Por mês (últimos 6)
   const meses = [];
   const [Y,M] = mes.split("-").map(Number);
   for (let k=5; k>=0; k--){
@@ -612,34 +769,43 @@ async function renderCharts(mes){
 }
 
 /** ======================
- *  UI Helpers
+ *  UI
  *  ====================== */
 function setView(which){
-  const vMes = $("viewMes"), vAdd = $("viewAdd"), vGra = $("viewGraficos");
-  vMes.classList.toggle("hidden", which!=="MES");
-  vAdd.classList.toggle("hidden", which!=="ADD");
-  vGra.classList.toggle("hidden", which!=="GRAF");
+  $("viewMes").classList.toggle("hidden", which!=="MES");
+  $("viewAdd").classList.toggle("hidden", which!=="ADD");
+  $("viewGraficos").classList.toggle("hidden", which!=="GRAF");
 
   $("navMes").classList.toggle("active", which==="MES");
   $("navAdd").classList.toggle("active", which==="ADD");
   $("navGraficos").classList.toggle("active", which==="GRAF");
 }
 
-/** ======================
- *  Render Mês (lista de cards)
- *  ====================== */
 function badgeFor(x){
   const st = (x.status || "PENDENTE");
   const isFixed = (x.tipo === "FIXO");
+
   const b = document.createElement("span");
   b.className = "badge " + (st==="PAGO" ? "ok" : "pending");
   b.textContent = (st==="PAGO" ? "Pago" : "Pendente");
+
   const t = document.createElement("span");
   t.className = "badge " + (isFixed ? "fixed" : "manual");
   t.textContent = (isFixed ? "Fixo" : "Manual");
+
   return {statusBadge:b, typeBadge:t};
 }
 
+function mkField(lbl, val){
+  const d = document.createElement("div");
+  d.className = "field";
+  d.innerHTML = `<div class="lbl">${lbl}</div><div class="val">${val}</div>`;
+  return d;
+}
+
+/** ======================
+ *  Render Mês (busca + ordenação + alertas)
+ *  ====================== */
 async function renderMonth(){
   const mes = $("mes").value || currentMonth();
   $("mesAdd").value = mes;
@@ -647,21 +813,66 @@ async function renderMonth(){
 
   await ensureFixedBillsForMonth(mes);
 
-  const filtroStatus = $("filtroStatus").value || "TODOS";
   const all = await dbGetAll();
 
-  const allMes = all
-    .filter(x => x.mes === mes)
-    .sort((a,b)=> (a.data||"").localeCompare(b.data||""));
+  // Base do mês (para KPIs e alertas)
+  const allMesFull = all.filter(x => x.mes === mes);
 
-  const itens = (filtroStatus==="TODOS")
+  // Avisos (sempre olhando o mês de referência)
+  showAlertsForMonth(mes, allMesFull);
+
+  // Busca (aplica em cima do mês)
+  const busca = normalizeText($("busca")?.value || "");
+  let allMes = allMesFull;
+
+  if(busca){
+    allMes = allMes.filter(x=>{
+      const blob = normalizeText(`${x.descricao} ${x.categoria} ${x.pagamento} ${x.tipo}`);
+      return blob.includes(busca);
+    });
+  }
+
+  // Filtro status
+  const filtroStatus = $("filtroStatus").value || "TODOS";
+  let itens = (filtroStatus==="TODOS")
     ? allMes
     : allMes.filter(x => (x.status || "PENDENTE") === filtroStatus);
 
-  // KPIs
+  // Ordenação
+  const ordenacao = $("ordenacao")?.value || "PENDENTE_DATA";
+  const dueKey = (x)=>{
+    const iso = monthDueDateISO(mes, x.vencimento);
+    return iso || "9999-12-31";
+  };
+  const pendingKey = (x)=> ((x.status||"PENDENTE")==="PENDENTE" ? 0 : 1);
+
+  itens.sort((a,b)=>{
+    if(ordenacao === "PENDENTE_DATA"){
+      const pa = pendingKey(a), pb = pendingKey(b);
+      if(pa!==pb) return pa-pb;
+      return (a.data||"").localeCompare(b.data||"");
+    }
+    if(ordenacao === "PENDENTE_VENC"){
+      const pa = pendingKey(a), pb = pendingKey(b);
+      if(pa!==pb) return pa-pb;
+      return dueKey(a).localeCompare(dueKey(b));
+    }
+    if(ordenacao === "VENC_ASC"){
+      return dueKey(a).localeCompare(dueKey(b));
+    }
+    if(ordenacao === "VALOR_DESC"){
+      return Number(b.valor||0) - Number(a.valor||0);
+    }
+    if(ordenacao === "VALOR_ASC"){
+      return Number(a.valor||0) - Number(b.valor||0);
+    }
+    return (a.data||"").localeCompare(b.data||""); // DATA_ASC
+  });
+
+  // KPIs (do mês inteiro, não só busca)
   let total=0, pendente=0;
   const sumCat = {};
-  for(const x of allMes){
+  for(const x of allMesFull){
     const v = Number(x.valor||0);
     total += v;
     if((x.status || "PENDENTE")==="PENDENTE") pendente += v;
@@ -671,7 +882,7 @@ async function renderMonth(){
 
   $("kpiTotal").textContent = brl(total);
   $("kpiPendente").textContent = brl(pendente);
-  $("kpiQtd").textContent = String(allMes.length);
+  $("kpiQtd").textContent = String(allMesFull.length);
   $("kpiTop").textContent = top ? `${top[0]} (${brl(top[1])})` : "—";
 
   // Lista
@@ -686,13 +897,28 @@ async function renderMonth(){
     topRow.className = "itemTop";
 
     const left = document.createElement("div");
+
     const desc = document.createElement("div");
     desc.className = "desc";
     desc.textContent = x.descricao || "(sem descrição)";
 
     const sub = document.createElement("div");
     sub.className = "sub";
-    sub.textContent = `${x.data || ""} • ${x.categoria || ""}`;
+
+    const dueISO = monthDueDateISO(mes, x.vencimento);
+    let dueTxt = "";
+    if(dueISO){
+      const diff = daysDiffFromToday(dueISO);
+      if((x.status||"PENDENTE")==="PENDENTE"){
+        if(diff < 0) dueTxt = ` • ⚠️ Atrasado (${Math.abs(diff)}d)`;
+        else if(diff === 0) dueTxt = ` • ⚠️ Vence hoje`;
+        else if(diff <= 3) dueTxt = ` • ⚠️ Vence em ${diff}d`;
+        else dueTxt = ` • Vence dia ${String(x.vencimento).padStart(2,"0")}`;
+      } else {
+        dueTxt = ` • Vence dia ${String(x.vencimento).padStart(2,"0")}`;
+      }
+    }
+    sub.textContent = `${x.data || ""} • ${x.categoria || ""}${dueTxt}`;
 
     const badges = document.createElement("div");
     badges.style.display="flex";
@@ -717,14 +943,12 @@ async function renderMonth(){
     topRow.appendChild(left);
     topRow.appendChild(right);
 
-    // Edição rápida (valor e status) — bem “app financeiro”
+    // Edição rápida
     const inline = document.createElement("div");
     inline.className = "inlineRow";
 
     const f1 = document.createElement("div");
-    const l1 = document.createElement("div");
-    l1.className = "miniLbl";
-    l1.textContent = "Valor";
+    f1.innerHTML = `<div class="miniLbl">Valor</div>`;
     const val = document.createElement("input");
     val.type = "number";
     val.step = "0.01";
@@ -734,13 +958,10 @@ async function renderMonth(){
       await dbPut(x);
       await renderMonth();
     };
-    f1.appendChild(l1);
     f1.appendChild(val);
 
     const f2 = document.createElement("div");
-    const l2 = document.createElement("div");
-    l2.className = "miniLbl";
-    l2.textContent = "Status";
+    f2.innerHTML = `<div class="miniLbl">Status</div>`;
     const st = document.createElement("select");
     st.innerHTML = `<option value="PENDENTE">Pendente</option><option value="PAGO">Pago</option>`;
     st.value = x.status || "PENDENTE";
@@ -749,7 +970,6 @@ async function renderMonth(){
       await dbPut(x);
       await renderMonth();
     };
-    f2.appendChild(l2);
     f2.appendChild(st);
 
     inline.appendChild(f1);
@@ -808,30 +1028,18 @@ async function renderMonth(){
     };
     actions.appendChild(del);
 
-    // Detalhes (pagamento, tipo etc.) — colapsável via "details"
+    // Detalhes
     const details = document.createElement("details");
-    details.style.marginTop = "10px";
     const summary = document.createElement("summary");
     summary.textContent = "Detalhes";
-    summary.style.cursor = "pointer";
-    summary.style.opacity = ".85";
-    summary.style.fontWeight = "800";
-    summary.style.padding = "6px 0";
 
     const grid = document.createElement("div");
-    grid.className = "details";
-
-    const mkField = (lbl, val)=>{
-      const d = document.createElement("div");
-      d.className = "field";
-      d.innerHTML = `<div class="lbl">${lbl}</div><div class="val">${val}</div>`;
-      return d;
-    };
-
+    grid.className = "detailsGrid";
     grid.appendChild(mkField("Pagamento", x.pagamento || "-"));
     grid.appendChild(mkField("Categoria", x.categoria || "-"));
     grid.appendChild(mkField("Data", x.data || "-"));
     grid.appendChild(mkField("Tipo", x.tipo || "MANUAL"));
+    grid.appendChild(mkField("Vencimento", x.vencimento ? `Dia ${String(x.vencimento).padStart(2,"0")}` : "-"));
 
     details.appendChild(summary);
     details.appendChild(grid);
@@ -846,7 +1054,7 @@ async function renderMonth(){
 }
 
 /** ======================
- *  Add manual
+ *  Adicionar manual
  *  ====================== */
 async function addItemManual(){
   const mes = $("mesAdd").value || currentMonth();
@@ -882,6 +1090,7 @@ async function addItemManual(){
     valor,
     status,
     tipo: "MANUAL",
+    vencimento: null,
     anexo,
     createdAt: Date.now()
   });
@@ -890,24 +1099,24 @@ async function addItemManual(){
   $("valor").value = "";
   $("anexo").value = "";
 
-  // volta para mês
   setView("MES");
   $("mes").value = mes;
   await renderMonth();
 }
 
 /** ======================
- *  Export / Backup
+ *  Export / Backup / Clear
  *  ====================== */
 async function exportCSV(){
   const mes = $("mes").value || currentMonth();
   const all = await dbGetAll();
   const itensMes = all.filter(x => x.mes === mes);
 
-  const header = ["mes","tipo","data","categoria","descricao","status","pagamento","valor","tem_anexo","anexo_nome","anexo_tipo"];
+  const header = ["mes","tipo","data","categoria","descricao","status","pagamento","valor","vencimento","tem_anexo","anexo_nome","anexo_tipo"];
   const rows = itensMes.map(x => ([
     x.mes, x.tipo || "", x.data || "", x.categoria || "", x.descricao || "",
     x.status || "PENDENTE", x.pagamento || "", String(Number(x.valor||0)),
+    x.vencimento ?? "",
     x.anexo ? "SIM" : "NAO",
     x.anexo ? x.anexo.name : "",
     x.anexo ? x.anexo.type : ""
@@ -931,6 +1140,158 @@ async function clearMonth(){
 }
 
 /** ======================
+ *  Importar backup (com/sem anexo)
+ *  ====================== */
+async function importBackupJSON(){
+  const inp = document.createElement("input");
+  inp.type = "file";
+  inp.accept = "application/json,.json";
+
+  inp.onchange = async ()=>{
+    const f = inp.files && inp.files[0] ? inp.files[0] : null;
+    if(!f) return;
+
+    let data;
+    try{
+      data = JSON.parse(await f.text());
+    }catch{
+      alert("Esse arquivo não parece ser um JSON válido.");
+      return;
+    }
+
+    if(!Array.isArray(data)){
+      alert("Formato inesperado. O backup precisa ser um array de itens.");
+      return;
+    }
+
+    const merge = confirm(
+      "Modo de importação:\n\nOK = MESCLAR (recomendado)\nCancelar = SUBSTITUIR TUDO"
+    );
+
+    if(!merge){
+      const ok2 = confirm("Tem certeza? Isso apaga tudo e restaura apenas o backup.");
+      if(!ok2) return;
+
+      const db = await openDB();
+      await new Promise((resolve, reject)=>{
+        const tx = db.transaction(STORE, "readwrite");
+        tx.objectStore(STORE).clear();
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    const keepAttachments = confirm(
+      "Importar ANEXOS junto?\n\nOK = Com anexo\nCancelar = Sem anexo (mais leve)"
+    );
+
+    let okCount = 0;
+    for(const it of data){
+      if(!it || typeof it !== "object") continue;
+
+      const row = { ...it };
+
+      if(!row.id) row.id = uid();
+      if(!row.mes) continue;
+
+      row.status = row.status || "PENDENTE";
+      row.tipo = row.tipo || "MANUAL";
+      row.valor = (typeof row.valor === "number") ? row.valor : Number(row.valor || 0);
+      row.vencimento = (row.vencimento === null || row.vencimento === undefined || row.vencimento === "")
+        ? null
+        : Math.min(31, Math.max(1, Number(row.vencimento)));
+
+      if(!keepAttachments) row.anexo = null;
+
+      if(keepAttachments && row.anexo && typeof row.anexo === "object"){
+        row.anexo.name = String(row.anexo.name || "anexo");
+        row.anexo.type = String(row.anexo.type || "application/octet-stream");
+        row.anexo.dataUrl = String(row.anexo.dataUrl || "");
+        if(!row.anexo.dataUrl.startsWith("data:")) row.anexo = null;
+      }
+
+      await dbPut(row);
+      okCount++;
+    }
+
+    alert(`Importação concluída: ${okCount} itens importados.`);
+    await renderMonth();
+  };
+
+  inp.click();
+}
+
+/** ======================
+ *  Editor de fixos (UI)
+ *  ====================== */
+function categoriasOptions(selected){
+  const cats = ["Alimentação","Transporte","Casa","Saúde","Lazer","Educação","Contas","Outros"];
+  return cats.map(c => `<option ${c===selected ? "selected":""}>${c}</option>`).join("");
+}
+function pagamentosOptions(selected){
+  const pays = ["Pix","Cartão Crédito","Cartão Débito","Dinheiro","Boleto"];
+  return pays.map(p => `<option ${p===selected ? "selected":""}>${p}</option>`).join("");
+}
+
+function renderFixosEditor(){
+  const fixos = loadFixos();
+  const host = $("fixosList");
+  host.innerHTML = "";
+
+  fixos.forEach((f, idx)=>{
+    const row = document.createElement("div");
+    row.className = "fixoRow";
+
+    const c1 = document.createElement("div");
+    c1.innerHTML = `<label>Nome</label><input data-fixo="nome" data-idx="${idx}" value="${(f.nome||"").replaceAll('"',"")}" placeholder="Ex: ALUGUEL">`;
+
+    const c2 = document.createElement("div");
+    c2.innerHTML = `<label>Categoria</label><select data-fixo="categoria" data-idx="${idx}">${categoriasOptions(f.categoria)}</select>`;
+
+    const c3 = document.createElement("div");
+    c3.innerHTML = `<label>Pagamento</label><select data-fixo="pagamento" data-idx="${idx}">${pagamentosOptions(f.pagamento)}</select>`;
+
+    const c4 = document.createElement("div");
+    c4.innerHTML = `<label>Venc. (dia)</label>
+      <input data-fixo="vencimento" data-idx="${idx}" type="number" min="1" max="31"
+             value="${(f.vencimento ?? "")}" placeholder="Ex: 10">`;
+
+    const c5 = document.createElement("div");
+    c5.innerHTML = `<label>&nbsp;</label>`;
+    const del = document.createElement("button");
+    del.className = "miniBtn";
+    del.textContent = "Remover";
+    del.onclick = ()=>{
+      const arr = loadFixos();
+      arr.splice(idx,1);
+      saveFixos(arr);
+      renderFixosEditor();
+    };
+    c5.appendChild(del);
+
+    row.appendChild(c1);
+    row.appendChild(c2);
+    row.appendChild(c3);
+    row.appendChild(c4);
+    row.appendChild(c5);
+
+    host.appendChild(row);
+  });
+}
+
+function collectFixosFromEditor(){
+  const fixos = loadFixos();
+  const inputs = document.querySelectorAll("[data-fixo]");
+  inputs.forEach(el=>{
+    const idx = Number(el.getAttribute("data-idx"));
+    const key = el.getAttribute("data-fixo");
+    if(!Number.isFinite(idx) || !fixos[idx]) return;
+    fixos[idx][key] = el.value;
+  });
+  return fixos;
+}
+
+/** ======================
  *  Init
  *  ====================== */
 (async ()=>{
@@ -942,16 +1303,20 @@ async function clearMonth(){
 
   // nav
   $("navMes").onclick = async ()=>{ setView("MES"); await renderMonth(); };
-  $("navAdd").onclick = ()=> setView("ADD");
+  $("navAdd").onclick = ()=>{ setView("ADD"); renderFixosEditor(); };
   $("navGraficos").onclick = async ()=>{
     setView("GRAF");
     const mes = $("mesGraf").value || $("mes").value || currentMonth();
     await renderCharts(mes);
   };
 
-  // events
+  // mês
   $("mes").onchange = renderMonth;
   $("filtroStatus").onchange = renderMonth;
+
+  // busca/ordenação
+  $("busca").oninput = renderMonth;
+  $("ordenacao").onchange = renderMonth;
 
   $("btnGarantirFixos").onclick = async ()=>{
     const mes = $("mes").value || currentMonth();
@@ -960,17 +1325,43 @@ async function clearMonth(){
     alert("Fixos gerados/garantidos para o mês.");
   };
 
+  // add
   $("btnAdd").onclick = ()=>addItemManual().catch(err=>{
     console.error(err);
     alert("Falha ao salvar. Talvez o anexo seja grande demais.");
   });
 
+  // export/backup/import/clear
   $("btnExportCSV").onclick = exportCSV;
   $("btnBackup").onclick = backupJSON;
+  $("btnImport").onclick = ()=>importBackupJSON().catch(console.error);
   $("btnClear").onclick = clearMonth;
 
+  // gráficos
   $("mesGraf").onchange = async ()=>{ await renderCharts($("mesGraf").value || currentMonth()); };
   $("grafFiltro").onchange = async ()=>{ await renderCharts($("mesGraf").value || currentMonth()); };
+
+  // editor fixos
+  $("btnAddFixo").onclick = ()=>{
+    const arr = loadFixos();
+    arr.push({ nome:"NOVO FIXO", categoria:"Contas", pagamento:"Boleto", vencimento: null });
+    saveFixos(arr);
+    renderFixosEditor();
+  };
+
+  $("btnSalvarFixos").onclick = async ()=>{
+    const arr = collectFixosFromEditor();
+    saveFixos(arr);
+    alert("Fixos salvos! Vá na aba Mês e clique em “Gerar fixos do mês” se quiser aplicar agora.");
+  };
+
+  $("btnResetFixos").onclick = ()=>{
+    const ok = confirm("Resetar para os fixos padrão?");
+    if(!ok) return;
+    resetFixos();
+    renderFixosEditor();
+    alert("Fixos resetados.");
+  };
 
   // PWA
   if ("serviceWorker" in navigator) {
@@ -980,6 +1371,5 @@ async function clearMonth(){
   await renderMonth();
 })();
 </script>
-
 </body>
 </html>
