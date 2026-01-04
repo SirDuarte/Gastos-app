@@ -133,6 +133,10 @@
       color:var(--txt);
       font-weight:800;
       font-size:13px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
     .chip.primary{border-color:rgba(45,108,223,.45); color:#d9e6ff}
     .chip.ok{border-color:rgba(46,204,113,.45); color:#dff8ea}
@@ -238,7 +242,7 @@
         </div>
         <div>
           <label>&nbsp;</label>
-          <button class="btn secondary" id="btnGarantirFixos">Gerar fixos do mês</button>
+          <button class="btn secondary" id="btnGarantirFixos">Gerar custos fixos do mês</button>
         </div>
       </div>
 
@@ -268,7 +272,25 @@
       </div>
 
       <div class="muted" style="margin-top:10px">
-        Edite <b>valor</b> e <b>status</b> como num app financeiro (sem tabela lateral).
+        Agora os fixos <b>não são gerados automaticamente</b>. Se quiser, toque em <b>Gerar custos fixos do mês</b>.
+      </div>
+
+      <!-- DESBLOQUEIO (Jeito 1) - automático (sem digitar) -->
+      <div id="desbloqBox" class="hidden">
+        <div class="hr"></div>
+        <div class="row">
+          <div>
+            <label>Fixos bloqueados (neste mês)</label>
+            <select id="desbloqSelect"></select>
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <button class="btn secondary" id="btnDesbloq">Desfazer bloqueio</button>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:8px">
+          Isso serve para “voltar atrás” caso você tenha bloqueado um fixo sem querer.
+        </div>
       </div>
     </div>
 
@@ -377,7 +399,7 @@
         <button class="btn secondary" id="btnResetFixos" style="width:auto">Resetar padrão</button>
       </div>
       <div class="muted" style="margin-top:8px">
-        Aqui você define quais fixos aparecem todo mês. Depois, na aba “Mês”, é só preencher valor e marcar pago/pendente.
+        Isso define a lista de fixos. Eles só aparecem no mês quando você clicar em “Gerar custos fixos do mês”.
       </div>
 
       <div id="fixosList"></div>
@@ -490,9 +512,10 @@ async function dbClearMonth(mes){
 }
 
 /** ======================
- *  Fixos (configurável)
+ *  Fixos (configurável) + bloqueio por mês
  *  ====================== */
 const FIXOS_KEY = "gastos_fixos_v1";
+const FIXOS_BLOCK_PREFIX = "gastos_fixos_block_"; // + YYYY-MM
 
 const FIXOS_PADRAO = [
   { nome: "FIES",           categoria: "Educação", pagamento: "Boleto",         vencimento: 5  },
@@ -546,15 +569,47 @@ function resetFixos(){
   localStorage.setItem(FIXOS_KEY, JSON.stringify(FIXOS_PADRAO));
 }
 
+function blockKey(mes){ return FIXOS_BLOCK_PREFIX + mes; }
+
+function loadBlockedFixos(mes){
+  try{
+    const raw = localStorage.getItem(blockKey(mes));
+    if(!raw) return new Set();
+    const arr = JSON.parse(raw);
+    if(!Array.isArray(arr)) return new Set();
+    return new Set(arr.map(x => String(x||"").toUpperCase().trim()).filter(Boolean));
+  }catch{
+    return new Set();
+  }
+}
+function saveBlockedFixos(mes, setObj){
+  const arr = Array.from(setObj);
+  localStorage.setItem(blockKey(mes), JSON.stringify(arr));
+}
+function blockFixoForMonth(mes, nome){
+  const s = loadBlockedFixos(mes);
+  s.add(String(nome||"").toUpperCase().trim());
+  saveBlockedFixos(mes, s);
+}
+function unblockFixoForMonth(mes, nome){
+  const s = loadBlockedFixos(mes);
+  s.delete(String(nome||"").toUpperCase().trim());
+  saveBlockedFixos(mes, s);
+}
+
 async function ensureFixedBillsForMonth(mes){
   const FIXOS = loadFixos();
+  const blocked = loadBlockedFixos(mes);
   const all = await dbGetAll();
 
   for (const f of FIXOS){
+    const nome = String(f.nome||"").toUpperCase().trim();
+    if(blocked.has(nome)) continue;
+
     const exists = all.some(x =>
       x.mes === mes &&
       x.tipo === "FIXO" &&
-      String(x.descricao || "").toUpperCase().trim() === f.nome
+      String(x.descricao || "").toUpperCase().trim() === nome
     );
 
     if (!exists){
@@ -563,7 +618,7 @@ async function ensureFixedBillsForMonth(mes){
         mes,
         data: mes + "-01",
         categoria: f.categoria,
-        descricao: f.nome,
+        descricao: nome,
         pagamento: f.pagamento,
         vencimento: f.vencimento ?? null,
         valor: 0,
@@ -631,7 +686,7 @@ function monthDueDateISO(mes, dia){
   if(!dia) return null;
   const [y, m] = mes.split("-").map(Number);
   const d = new Date(y, m - 1, Number(dia));
-  if(d.getMonth() !== (m-1)) return null; // valida 31 em mês curto, etc.
+  if(d.getMonth() !== (m-1)) return null;
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth()+1).padStart(2,"0");
   const dd = String(d.getDate()).padStart(2,"0");
@@ -661,7 +716,7 @@ function showAlertsForMonth(mes, itensMes){
     })
     .filter(r => r.dueISO);
 
-  const horizonDays = 3; // perto = 3 dias
+  const horizonDays = 3;
   const urgent = pendingWithDue.filter(r => r.diff <= horizonDays);
 
   if(urgent.length === 0){
@@ -684,7 +739,6 @@ function showAlertsForMonth(mes, itensMes){
   alertText.style.whiteSpace = "pre-line";
   alertBox.style.display = "block";
 
-  // popup 1x/dia (por mês)
   const key = `alert_shown_${mes}_${todayISO()}`;
   if(!localStorage.getItem(key)){
     localStorage.setItem(key, "1");
@@ -804,24 +858,40 @@ function mkField(lbl, val){
 }
 
 /** ======================
- *  Render Mês (busca + ordenação + alertas)
+ *  Render Mês (sem autogerar fixos)
  *  ====================== */
+function renderDesbloqueioUI(mes){
+  const box = $("desbloqBox");
+  const sel = $("desbloqSelect");
+
+  const blocked = Array.from(loadBlockedFixos(mes)).sort((a,b)=>a.localeCompare(b));
+  if(blocked.length === 0){
+    box.classList.add("hidden");
+    sel.innerHTML = "";
+    return;
+  }
+
+  sel.innerHTML = blocked.map(n => `<option value="${n}">${n}</option>`).join("");
+  box.classList.remove("hidden");
+}
+
 async function renderMonth(){
   const mes = $("mes").value || currentMonth();
   $("mesAdd").value = mes;
   $("mesGraf").value = mes;
 
-  await ensureFixedBillsForMonth(mes);
+  // desbloqueio (Jeito 1) - automático
+  renderDesbloqueioUI(mes);
 
   const all = await dbGetAll();
-
-  // Base do mês (para KPIs e alertas)
   const allMesFull = all.filter(x => x.mes === mes);
 
-  // Avisos (sempre olhando o mês de referência)
-  showAlertsForMonth(mes, allMesFull);
+  if(allMesFull.length > 0) showAlertsForMonth(mes, allMesFull);
+  else {
+    const alertBox = $("alertas");
+    if(alertBox) alertBox.style.display = "none";
+  }
 
-  // Busca (aplica em cima do mês)
   const busca = normalizeText($("busca")?.value || "");
   let allMes = allMesFull;
 
@@ -832,13 +902,11 @@ async function renderMonth(){
     });
   }
 
-  // Filtro status
   const filtroStatus = $("filtroStatus").value || "TODOS";
   let itens = (filtroStatus==="TODOS")
     ? allMes
     : allMes.filter(x => (x.status || "PENDENTE") === filtroStatus);
 
-  // Ordenação
   const ordenacao = $("ordenacao")?.value || "PENDENTE_DATA";
   const dueKey = (x)=>{
     const iso = monthDueDateISO(mes, x.vencimento);
@@ -866,10 +934,9 @@ async function renderMonth(){
     if(ordenacao === "VALOR_ASC"){
       return Number(a.valor||0) - Number(b.valor||0);
     }
-    return (a.data||"").localeCompare(b.data||""); // DATA_ASC
+    return (a.data||"").localeCompare(b.data||"");
   });
 
-  // KPIs (do mês inteiro, não só busca)
   let total=0, pendente=0;
   const sumCat = {};
   for(const x of allMesFull){
@@ -885,7 +952,6 @@ async function renderMonth(){
   $("kpiQtd").textContent = String(allMesFull.length);
   $("kpiTop").textContent = top ? `${top[0]} (${brl(top[1])})` : "—";
 
-  // Lista
   const list = $("list");
   list.innerHTML = "";
 
@@ -943,7 +1009,6 @@ async function renderMonth(){
     topRow.appendChild(left);
     topRow.appendChild(right);
 
-    // Edição rápida
     const inline = document.createElement("div");
     inline.className = "inlineRow";
 
@@ -975,7 +1040,6 @@ async function renderMonth(){
     inline.appendChild(f1);
     inline.appendChild(f2);
 
-    // Ações
     const actions = document.createElement("div");
     actions.className = "actions";
 
@@ -1023,12 +1087,31 @@ async function renderMonth(){
     del.className = "chip danger";
     del.textContent = "Excluir";
     del.onclick = async ()=>{
+      if(x.tipo === "FIXO"){
+        const excluirSoEste = confirm(
+          "Esse item é um custo FIXO.\n\nOK = Excluir só este lançamento (ele pode voltar se você gerar os fixos de novo)\nCancelar = Excluir este fixo DESTE MÊS (ele NÃO volta ao gerar fixos)"
+        );
+        if(excluirSoEste){
+          await dbDelete(x.id);
+          await renderMonth();
+          return;
+        }else{
+          const ok2 = confirm("Confirmar: este fixo será removido deste mês e ficará bloqueado para este mês.");
+          if(!ok2) return;
+          blockFixoForMonth(mes, x.descricao);
+          await dbDelete(x.id);
+          await renderMonth();
+          return;
+        }
+      }
+
+      const ok = confirm("Excluir este gasto?");
+      if(!ok) return;
       await dbDelete(x.id);
       await renderMonth();
     };
     actions.appendChild(del);
 
-    // Detalhes
     const details = document.createElement("details");
     const summary = document.createElement("summary");
     summary.textContent = "Detalhes";
@@ -1313,16 +1396,30 @@ function collectFixosFromEditor(){
   // mês
   $("mes").onchange = renderMonth;
   $("filtroStatus").onchange = renderMonth;
-
-  // busca/ordenação
   $("busca").oninput = renderMonth;
   $("ordenacao").onchange = renderMonth;
 
+  // GERAR FIXOS (manual)
   $("btnGarantirFixos").onclick = async ()=>{
     const mes = $("mes").value || currentMonth();
     await ensureFixedBillsForMonth(mes);
     await renderMonth();
-    alert("Fixos gerados/garantidos para o mês.");
+    alert("Custos fixos gerados para o mês (respeitando os bloqueios deste mês).");
+  };
+
+  // DESBLOQUEAR FIXO (Jeito 1) - automático
+  $("btnDesbloq").onclick = async ()=>{
+    const mes = $("mes").value || currentMonth();
+    const nome = ($("desbloqSelect").value || "").toUpperCase().trim();
+    if(!nome) return alert("Não há fixos bloqueados para desfazer.");
+
+    unblockFixoForMonth(mes, nome);
+
+    // opcional: já recria o fixo no mês atual
+    await ensureFixedBillsForMonth(mes);
+    await renderMonth();
+
+    alert(`Bloqueio removido para ${nome} em ${mes}.`);
   };
 
   // add
@@ -1352,7 +1449,7 @@ function collectFixosFromEditor(){
   $("btnSalvarFixos").onclick = async ()=>{
     const arr = collectFixosFromEditor();
     saveFixos(arr);
-    alert("Fixos salvos! Vá na aba Mês e clique em “Gerar fixos do mês” se quiser aplicar agora.");
+    alert("Fixos salvos! Para aparecer no mês, vá na aba Mês e clique em “Gerar custos fixos do mês”.");
   };
 
   $("btnResetFixos").onclick = ()=>{
